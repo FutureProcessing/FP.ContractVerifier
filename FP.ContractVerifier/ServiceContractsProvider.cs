@@ -34,8 +34,7 @@ namespace ContractVerifier
                     serviceContract.ExpectedResponseObjectKeys = GetKeyOrDefault(contractProperties, "expectedResponseObjectKeys", (JArray)null);
                     serviceContract.NotExpectedResponseObject = GetKeyOrDefault(contractProperties, "notExpectedResponseObject", (JObject)null);
                     serviceContract.NotExpectedResponseObjectsArray = GetKeyOrDefault(contractProperties, "notExpectedResponseObjectsArray", (JArray)null);
-                    serviceContract.DisableCoreDbRestore = GetKeyOrDefault(contractProperties, "disableCoreDbRestore", false);
-                    serviceContract.DisableBookingDbRestore = GetKeyOrDefault(contractProperties, "disableBookingDbRestore", false);
+                    serviceContract.DisableDbRestore = GetKeyOrDefault(contractProperties, "disableDbRestore", false);
 
                     var sqlQueryArray = GetKeyOrDefault(contractProperties, "sqlQueryAfter", (JArray)null);
                     if (sqlQueryArray != null)

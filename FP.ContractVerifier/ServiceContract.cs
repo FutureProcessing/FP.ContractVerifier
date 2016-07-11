@@ -39,20 +39,17 @@ namespace ContractVerifier
 
         public string SqlQueryAfter { get; set; }
 
-        public bool DisableCoreDbRestore { get; set; }
-
-        public bool DisableBookingDbRestore { get; set; }
-
-        public bool DisablePricingDbRestore { get; set; }
+        public bool DisableDbRestore { get; set; }
 
         public override string ToString()
         {
             return ContractName;
         }
 
-        public void AssertSelf(string serviceBase, string authToken)
+        // TODO: add overload with extra header
+        public void AssertSelf(string serviceBase)
         {
-            var response = CreateAndExecuteRequestFromContract(serviceBase, authToken);
+            var response = CreateAndExecuteRequestFromContract(serviceBase);
 
             AssertStatusCode(response);
             AssertResponseObjectContainsExpectedKeysAndValues(response);
@@ -66,13 +63,15 @@ namespace ContractVerifier
             ExecuteSqlQueryAfter();
         }
 
-        public IRestResponse CreateAndExecuteRequestFromContract(string serviceBase, string authToken)
+        public IRestResponse CreateAndExecuteRequestFromContract(string serviceBase)
         {
             var client = new RestClient(serviceBase);
             var request = new RestRequest(Url);
 
             request.Method = (Method)Enum.Parse(typeof(Method), HttpMethod);
-            request.AddHeader("Authorization", "Bearer " + authToken);
+            
+            // TODO hande extra headers
+            //request.AddHeader("Authorization", "Bearer " + authToken);
 
             if (RequestBody != null)
             {

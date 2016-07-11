@@ -11,7 +11,7 @@ namespace ContractVerifier
     {
         public static void ExecuteSqlQuery(string sqlQuery)
         {
-            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["CoreContext"].ConnectionString))
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DatabaseContext"].ConnectionString))
             {
                 connection.Execute(sqlQuery);
             }
@@ -19,6 +19,7 @@ namespace ContractVerifier
 
         public static void ExecuteSqlQueryInMasterContext(string sqlQuery)
         {
+            // TODO: inject?
             using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["MasterContext"].ConnectionString))
             {
                 connection.Execute(sqlQuery);

@@ -1,0 +1,7 @@
+﻿{
+  "contractName": "Get main page",
+  "httpMethod": "GET",
+  "url": "/",
+  "expectedStatusCode": 200,
+  "disableDbRestore": true
+}

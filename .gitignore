@@ -30,6 +30,7 @@ ipch/
 *.vssscc
 *.bak.*
 *.bak
+.vs
 
 # NuGet packages - should be restored onbuild
 /packages
