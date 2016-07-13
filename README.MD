@@ -16,38 +16,39 @@ Please note it is not fully featured testing framework. Usually will require som
 
 ### Example
 
-    ``` javascript
-    {
-        "contractName": "Get all items",
-        "httpMethod": "GET",
-        "url": "/items",
-        "expectedStatusCode": 200,
-        "expectedResponseArrayObjects": [
-            {
-                "name": "Yacht",
-                "price": 50000.0
-            },
-            {
-                "name": "Barbie Doll",
-                "price": 20.0
-            }
-        ],
-        "notExpectedResponseArrayObjects": [
-            {
-                "name": "Yacht",
-                "price": 100
-            },{
-                "name": "Beyonce Bratz Doll",
-                "price": 20.0
-            },{
-                "name": "Barbie Doll",
-                "price": 20.0,
-                "notExistingProp": "with some value"
-            }
-        ],
-        "disableDbRestore": true
-    }
-    ```
+```javascript
+{
+    "contractName": "Get all items",
+    "httpMethod": "GET",
+    "url": "/items",
+    "expectedStatusCode": 200,
+    "expectedResponseArrayObjects": [
+        {
+            "name": "Yacht",
+            "price": 50000.0
+        },
+        {
+            "name": "Barbie Doll",
+            "price": 20.0
+        }
+    ],
+    "notExpectedResponseArrayObjects": [
+        {
+            "name": "Yacht",
+            "price": 100
+        },{
+            "name": "Beyonce Bratz Doll",
+            "price": 20.0
+        },{
+            "name": "Barbie Doll",
+            "price": 20.0,
+            "notExistingProp": "with some value"
+        }
+    ],
+    "disableDbRestore": true
+}
+```
+
 
 ### Request elements
 
