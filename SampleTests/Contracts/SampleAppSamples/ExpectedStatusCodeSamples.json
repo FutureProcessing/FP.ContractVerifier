@@ -1,0 +1,27 @@
+﻿[
+    {
+        "contractName": "Get all items - response 200",
+        "httpMethod": "GET",
+        "url": "/items",
+        "expectedStatusCode": 200,
+        "disableDbRestore": true
+    },
+    {
+        "contractName": "Put sample - response 200 or 204",
+        "httpMethod": "PUT",
+        "url": "/items/0",
+        "expectedStatusCode": "2..",
+        "requestBody":  {
+            "name": "Table saw",
+            "price":  "1200"
+        },
+        "disableDbRestore": true
+    },
+    {
+        "contractName": "Get not existing",
+        "httpMethod": "GET",
+        "url": "/items/10",
+        "expectedStatusCode": 404,
+        "disableDbRestore": true
+    },
+]

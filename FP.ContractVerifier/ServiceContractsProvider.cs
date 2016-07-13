@@ -20,31 +20,53 @@ namespace ContractVerifier
 
                 foreach (JObject contractProperties in contractsArray)
                 {
-                    var serviceContract = new ServiceContract();
+                    var serviceContract = CreateServiceContract(contractProperties, Path.GetFileNameWithoutExtension(file));
                     serviceContracts.Add(serviceContract);
-                    serviceContract.ContractName = GetKeyOrDefault(contractProperties, "contractName", Path.GetFileNameWithoutExtension(file));
-                    serviceContract.HttpMethod = GetKeyOrDefault(contractProperties, "httpMethod", "GET");
-                    serviceContract.Url = GetKeyOrDefault(contractProperties, "url", string.Empty);
-                    serviceContract.RequestBody = GetKeyOrDefault(contractProperties, "requestBody", (object)null);
-                    serviceContract.ExpectedStatusCodeRegExp = GetKeyOrDefault(contractProperties, "expectedStatusCode", "200");
-                    serviceContract.ExpectedResponseObject = GetKeyOrDefault(contractProperties, "expectedResponseObject", (JObject)null);
-                    serviceContract.ExpectedResponseObjectsArray = GetKeyOrDefault(contractProperties, "expectedResponseObjectsArray", (JArray)null);
-                    serviceContract.ExpectedResponseArray = GetKeyOrDefault(contractProperties, "expectedResponseArray", (JArray)null);
-                    serviceContract.UnexpectedResponseArray = GetKeyOrDefault(contractProperties, "unexpectedResponseArray", (JArray)null);
-                    serviceContract.ExpectedResponseObjectKeys = GetKeyOrDefault(contractProperties, "expectedResponseObjectKeys", (JArray)null);
-                    serviceContract.NotExpectedResponseObject = GetKeyOrDefault(contractProperties, "notExpectedResponseObject", (JObject)null);
-                    serviceContract.NotExpectedResponseObjectsArray = GetKeyOrDefault(contractProperties, "notExpectedResponseObjectsArray", (JArray)null);
-                    serviceContract.DisableDbRestore = GetKeyOrDefault(contractProperties, "disableDbRestore", false);
-
-                    var sqlQueryArray = GetKeyOrDefault(contractProperties, "sqlQueryAfter", (JArray)null);
-                    if (sqlQueryArray != null)
-                    {
-                        string[] queries = sqlQueryArray.Select(q => q.ToString()).ToArray();
-                        serviceContract.SqlQueryAfter = string.Join(string.Empty, queries);
-                    }
                 }
             }
 
+            return serviceContracts;
+        }
+
+        private static ServiceContract CreateServiceContract(JObject contractProperties, string contractName)
+        {
+            var serviceContract = new ServiceContract();
+            serviceContract.ContractName = GetKeyOrDefault(contractProperties, "contractName", contractName);
+            serviceContract.HttpMethod = GetKeyOrDefault(contractProperties, "httpMethod", "GET");
+            serviceContract.Url = GetKeyOrDefault(contractProperties, "url", string.Empty);
+            serviceContract.RequestBody = GetKeyOrDefault(contractProperties, "requestBody", (object) null);
+            serviceContract.ExpectedStatusCodeRegExp = GetKeyOrDefault(contractProperties, "expectedStatusCode", "200");
+            serviceContract.ExpectedResponseObject = GetKeyOrDefault(contractProperties, "expectedResponseObject", (JObject) null);
+            serviceContract.ExpectedResponseArrayObjects = GetKeyOrDefault(contractProperties, "expectedResponseArrayObjects", (JArray)null);
+            serviceContract.ExpectedResponseArrayValues = GetKeyOrDefault(contractProperties, "expectedResponseArrayValues", (JArray)null);
+            serviceContract.NotExpectedResponseArrayValues = GetKeyOrDefault(contractProperties, "notExpectedResponseArrayValues", (JArray)null);
+            serviceContract.ExpectedResponseObjectKeys = GetKeyOrDefault(contractProperties, "expectedResponseObjectKeys", (JArray) null);
+            serviceContract.NotExpectedResponseArrayObjects = GetKeyOrDefault(contractProperties, "notExpectedResponseArrayObjects", (JArray)null);
+            serviceContract.DisableDbRestore = GetKeyOrDefault(contractProperties, "disableDbRestore", false);
+
+            var sqlQueryArray = GetKeyOrDefault(contractProperties, "sqlQueryAfter", (JArray) null);
+            if (sqlQueryArray != null)
+            {
+                string[] queries = sqlQueryArray.Select(q => q.ToString()).ToArray();
+                serviceContract.SqlQueryAfter = string.Join(string.Empty, queries);
+            }
+
+            return serviceContract;
+        }
+
+        public static List<ServiceContract> GetFromJsonFile(string path)
+        {
+            var serviceContracts = new List<ServiceContract>();
+            var readAllText = File.ReadAllText(path);
+            var deserilizedContract = JsonConvert.DeserializeObject(readAllText);
+            var contractsArray = deserilizedContract as JArray ?? new JArray { deserilizedContract as JObject };
+
+            foreach (JObject contractProperties in contractsArray)
+            {
+                var serviceContract = CreateServiceContract(contractProperties, Path.GetFileNameWithoutExtension(path));
+                serviceContracts.Add(serviceContract);
+            }
+            
             return serviceContracts;
         }
 

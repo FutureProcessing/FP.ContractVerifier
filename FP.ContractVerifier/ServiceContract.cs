@@ -24,16 +24,14 @@ namespace ContractVerifier
         public string ExpectedStatusCodeRegExp { get; set; }
 
         public JObject ExpectedResponseObject { get; set; }
+        
+        public JArray NotExpectedResponseArrayObjects { get; set; }
 
-        public JObject NotExpectedResponseObject { get; set; }
+        public JArray ExpectedResponseArrayValues { get; set; }
 
-        public JArray NotExpectedResponseObjectsArray { get; set; }
+        public JArray NotExpectedResponseArrayValues { get; set; }
 
-        public JArray ExpectedResponseArray { get; set; }
-
-        public JArray UnexpectedResponseArray { get; set; }
-
-        public JArray ExpectedResponseObjectsArray { get; set; }
+        public JArray ExpectedResponseArrayObjects { get; set; }
 
         public JArray ExpectedResponseObjectKeys { get; set; }
 
@@ -57,7 +55,6 @@ namespace ContractVerifier
             AssertResponseObjectsArrayContainsExpectedKeysAndValues(response);
             AssertResponseArrayContainsValues(response);
             AssertResponseArrayDoesNotContainValues(response);
-            AssertResponseObjectsArrayDoesNotContainExpectedKeysAndValues(response);
             AssertResponseObjectsArrayNotContainsExpectedKeysAndValues(response);
 
             ExecuteSqlQueryAfter();
@@ -89,7 +86,7 @@ namespace ContractVerifier
             {
                 Assert.True(
                     actualArray.Any(obj => ContainsExpectedPropertiesWithValues(objectExpectedInArray, obj)),
-                    "Response array does not contain contain expected object: " + objectExpectedInArray);
+                    "Response array does not contain contain expected object: " + objectExpectedInArray + ". Actuall array: " + actualArray);
             }
         }
 
@@ -105,20 +102,20 @@ namespace ContractVerifier
 
         private void AssertResponseObjectsArrayContainsExpectedKeysAndValues(IRestResponse response)
         {
-            if (ExpectedResponseObjectsArray != null)
+            if (ExpectedResponseArrayObjects != null)
             {
                 var responseContent = JsonConvert.DeserializeObject<JArray>(response.Content);
-                AssertArrayContainsExpectedElements(responseContent, ExpectedResponseObjectsArray);
+                AssertArrayContainsExpectedElements(responseContent, ExpectedResponseArrayObjects);
             }
         }
 
         private void AssertResponseArrayContainsValues(IRestResponse response)
         {
-            if (ExpectedResponseArray != null)
+            if (ExpectedResponseArrayValues != null)
             {
                 var responseContent = JsonConvert.DeserializeObject<JArray>(response.Content);
 
-                foreach (var expectedArrayValue in ExpectedResponseArray)
+                foreach (var expectedArrayValue in ExpectedResponseArrayValues)
                 {
                     Assert.True(
                         responseContent.Any(val => expectedArrayValue.Equals(val)),
@@ -129,11 +126,11 @@ namespace ContractVerifier
 
         private void AssertResponseArrayDoesNotContainValues(IRestResponse response)
         {
-            if (UnexpectedResponseArray != null)
+            if (NotExpectedResponseArrayValues != null)
             {
                 var responseContent = JsonConvert.DeserializeObject<JArray>(response.Content);
 
-                foreach (var unexpectedArrayValue in UnexpectedResponseArray)
+                foreach (var unexpectedArrayValue in NotExpectedResponseArrayValues)
                 {
                     {
                         Assert.False(
@@ -146,10 +143,10 @@ namespace ContractVerifier
 
         private void AssertResponseObjectsArrayNotContainsExpectedKeysAndValues(IRestResponse response)
         {
-            if (NotExpectedResponseObjectsArray != null)
+            if (NotExpectedResponseArrayObjects != null)
             {
                 var responseContent = JsonConvert.DeserializeObject<JArray>(response.Content);
-                AssertArrayNotContainsExpectedElements(responseContent, NotExpectedResponseObjectsArray);
+                AssertArrayNotContainsExpectedElements(responseContent, NotExpectedResponseArrayObjects);
             }
         }
 
@@ -224,30 +221,6 @@ namespace ContractVerifier
                             expectedProperty.Value.Value<string>(),
                             actualValue.Value<string>(), 
                             "Invalid value of expected response property: " + expectedProperty.Key);
-                    }
-                }
-            }
-        }
-
-        private void AssertResponseObjectsArrayDoesNotContainExpectedKeysAndValues(IRestResponse response)
-        {
-            if (NotExpectedResponseObject != null)
-            {
-                var responseContent = JsonConvert.DeserializeObject<JObject>(response.Content);
-                foreach (var expectedPropery in NotExpectedResponseObject)
-                {
-                    var value = responseContent[expectedPropery.Key];
-                    Assert.NotNull(value, "Response does not contain expected property: " + expectedPropery.Key);
-
-                    var expectedArrayValues = expectedPropery.Value as JArray;
-                    if (expectedArrayValues != null)
-                    {
-                        var valueArray = value as JArray;
-                        Assert.IsNotNull(
-                            valueArray,
-                            string.Format(CultureInfo.CurrentCulture, "Response property {0} is expected to be array but it is not.", expectedPropery.Key));
-
-                        AssertArrayNotContainsExpectedElements(valueArray, expectedArrayValues);
                     }
                 }
             }

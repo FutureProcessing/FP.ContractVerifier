@@ -44,8 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SampleAppTestsSamples.cs" />
     <Compile Include="FutureProcessingWebSiteTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SampleAppTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FP.ContractVerifier\FP.ContractVerifier.csproj">
@@ -55,6 +57,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Contracts\FutureProcessingWebSite\GetMainPage.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Contracts\SampleAppSamples\ExpectedStatusCodeSamples.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Contracts\SampleAppSamples\NotExpectedResponseArrayValuesAndArrayObjectsSamples.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Contracts\SampleAppSamples\ExpectedResponseArrayValuesAndArrayObjectsSamples.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Contracts\SampleAppSamples\ExpectedResponseObjectAndObjectKeysSamples.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Contracts\SampleAppContracts\ItemsContracts.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

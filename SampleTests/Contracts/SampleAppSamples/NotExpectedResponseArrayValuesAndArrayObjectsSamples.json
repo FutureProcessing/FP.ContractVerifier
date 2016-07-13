@@ -1,0 +1,33 @@
+﻿[
+    {
+        "contractName": "Ensure no not expected objects in array",
+        "httpMethod": "GET",
+        "url": "/itemNames",
+        "expectedStatusCode": 200,
+        "notExpectedResponseArrayValues": [
+            "Beyonce Bratz Doll",
+            "Rotary Saw"
+        ],
+        "disableDbRestore": true
+    },
+    {
+        "contractName": "Ensure no not expected objects in array",
+        "httpMethod": "GET",
+        "url": "/items",
+        "expectedStatusCode": 200,
+        "notExpectedResponseArrayObjects": [
+            {
+                "name": "Yacht",
+                "price": 100
+            },{
+                "name": "Beyonce Bratz Doll",
+                "price": 20.0
+            },{
+                "name": "Barbie Doll",
+                "price": 20.0,
+                "notExistingProp": "with some value"
+            }
+        ],
+        "disableDbRestore": true
+    }
+]

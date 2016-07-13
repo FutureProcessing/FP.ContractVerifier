@@ -1,0 +1,50 @@
+﻿[
+    {
+        "contractName": "Get all items",
+        "httpMethod": "GET",
+        "url": "/items",
+        "expectedStatusCode": 200,
+        "expectedResponseArrayObjects": [
+            {
+                "name": "Yacht",
+                "price": 50000.0
+            },
+            {
+                "name": "Barbie Doll",
+                "price": 20.0
+            }
+        ],
+        "notExpectedResponseArrayObjects": [
+            {
+                "name": "Yacht",
+                "price": 100
+            },{
+                "name": "Beyonce Bratz Doll",
+                "price": 20.0
+            },{
+                "name": "Barbie Doll",
+                "price": 20.0,
+                "notExistingProp": "with some value"
+            }
+        ],
+        "disableDbRestore": true
+    },
+    {
+        "contractName": "Can update item",
+        "httpMethod": "PUT",
+        "url": "/items/0",
+        "requestBody":  {
+            "name": "Table saw",
+            "price":  "1200"
+        },
+        "expectedStatusCode": "2..",
+        "disableDbRestore": true
+    },
+    {
+        "contractName": "Cannot get not existing item",
+        "httpMethod": "GET",
+        "url": "/items/10",
+        "expectedStatusCode": 404,
+        "disableDbRestore": true
+    }
+]

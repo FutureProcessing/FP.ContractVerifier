@@ -1,0 +1,33 @@
+﻿[
+    {
+        "contractName": "Item has Proper name",
+        "httpMethod": "GET",
+        "url": "/items/2",
+        "expectedStatusCode": 200,
+        "expectedResponseObject": {
+            "name": "Yacht"
+        },
+        "disableDbRestore": true
+    },
+    {
+        "contractName": "Item has Proper name and price",
+        "httpMethod": "GET",
+        "url": "/items/2",
+        "expectedStatusCode": 200,
+        "expectedResponseObject": {
+            "name": "Yacht",
+            "price":  50000.0
+        },
+        "disableDbRestore": true
+    },
+    {
+        "contractName": "Item all properties",
+        "httpMethod": "GET",
+        "url": "/items/2",
+        "expectedStatusCode": 200,
+        "expectedResponseObjectKeys": [ 
+            "name", "price", "id"
+        ],
+        "disableDbRestore": true
+    },
+]

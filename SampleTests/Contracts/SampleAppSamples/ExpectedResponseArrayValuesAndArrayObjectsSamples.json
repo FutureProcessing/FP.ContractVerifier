@@ -1,0 +1,29 @@
+﻿[
+    {
+        "contractName": "Get all expected objects in array",
+        "httpMethod": "GET",
+        "url": "/itemNames",
+        "expectedStatusCode": 200,
+        "expectedResponseArrayValues": [
+            "Yacht",
+            "Barbie Doll"
+        ],
+        "disableDbRestore": true
+    },
+    {
+        "contractName": "Item has Proper name and price",
+        "httpMethod": "GET",
+        "url": "/items",
+        "expectedStatusCode": 200,
+        "expectedResponseArrayObjects": [
+            {
+                "name": "Yacht",
+                "price": 50000.0
+            },{
+                "name": "Barbie Doll",
+                "price": 20.0
+            }
+        ],
+        "disableDbRestore": true
+    }
+]
