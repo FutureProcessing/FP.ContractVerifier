@@ -86,4 +86,5 @@ Feature require redesign.
 
 - Refine Framework API to make it less static but still convenient to use with NUnit.
 - Make DbRestore disabled by default.
-- Describe DbRestore option here and add samples
+- Describe DbRestore option here and add samples.
+- Create more generic solution for service authentication.
